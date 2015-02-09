@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *castLabel;
 @property (weak, nonatomic) IBOutlet UILabel *mpaaRatingLabel;
 @property (weak, nonatomic) IBOutlet UILabel *runtimeLabel;
+@property (weak, nonatomic) IBOutlet UILabel *yearLabel;
+
 @property (weak, nonatomic) IBOutlet UIImageView *criticsScoreImage;
 @property (weak, nonatomic) IBOutlet UILabel *criticsScoreLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *audienceScoreImage;
@@ -38,6 +40,9 @@
     [self.castLabel setText:[self getCastLabelString]];
     [self.mpaaRatingLabel setText:[self.movieDictionary valueForKey:@"mpaa_rating"]];
     [self.runtimeLabel setText:[NSString stringWithFormat:@"%@min",[self.movieDictionary valueForKey:@"runtime"]]];
+    if([self.movieDictionary valueForKey:@"year"]) {
+        [self.yearLabel setText:((NSNumber *) [self.movieDictionary valueForKey:@"year"]).description];
+    }
     //NSLog(@"ratings.critics_score %@", [self.movieDictionary valueForKeyPath:@"ratings.critics_score"]);
     //NSLog(@"ratings.audience_score %@", [self.movieDictionary valueForKeyPath:@"ratings.audience_score"]);
     if([self.movieDictionary valueForKeyPath:@"ratings.critics_score"]) {

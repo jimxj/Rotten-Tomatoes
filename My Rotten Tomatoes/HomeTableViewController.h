@@ -10,4 +10,9 @@
 
 @interface HomeTableViewController : UIViewController
 
+@property (nonatomic, strong) NSString *tabTitle;
+@property (nonatomic, strong) NSString *endpoint;
+
+- (instancetype) initWithTitle:(NSString *) tabTitle endpoint:(NSString *) endpoint;
+
 @end

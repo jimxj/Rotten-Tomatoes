@@ -29,6 +29,16 @@
     NSString *_cellName;
 }
 
+- (instancetype) initWithTitle:(NSString *) title endpoint:(NSString *) endpoint {
+    self = [super init];
+    if(self) {
+        _tabTitle = title;
+        _endpoint = endpoint;
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -42,7 +52,7 @@
         }
     }];
     
-    self.title = @"Hot in BoxOffice";
+    self.title = self.tabTitle;
     
     self.networkWarningLabel.hidden = YES;
     
@@ -64,9 +74,8 @@
 
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+- (void)viewWillAppear:(BOOL)animated {
+    self.tabBarController.tabBar.hidden = NO;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -89,7 +98,7 @@
     
     NSDictionary *movieInfo = self.isInSearchMode ? self.filteredMovies[indexPath.row] :self.movies[indexPath.row];
    
-    MovieDetailsViewController *detailsView = [[MovieDetailsViewController alloc] initWithMovieInfo:movieInfo thumbnailImage:selectedCell.imageView.image];
+    MovieDetailsViewController *detailsView = [[MovieDetailsViewController alloc] initWithMovieInfo:movieInfo thumbnailImage:selectedCell.posterThumbnailImageView.image];
     [self.navigationController pushViewController:detailsView animated:YES];
 }
 
@@ -98,7 +107,7 @@
 }
 
 -(void) fetchMovies {
-    NSURL *url = [NSURL URLWithString:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=9sx7gw734qybnmm8mgq25423"];
+    NSURL *url = [NSURL URLWithString:self.endpoint];
     NSURLRequest *urlRequest = [[NSURLRequest alloc] initWithURL:url];
     [NSURLConnection sendAsynchronousRequest:urlRequest queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
         

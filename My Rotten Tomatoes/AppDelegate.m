@@ -26,11 +26,21 @@
     
     [self setupImageCache];
     
-     HomeTableViewController *collectionView = [[HomeTableViewController alloc] init];
+     HomeTableViewController *boxOfficeVC = [[HomeTableViewController alloc] initWithTitle:@"BoxOffice" endpoint:@"http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey=9sx7gw734qybnmm8mgq25423"];
+    UINavigationController* nvc1 = [[UINavigationController alloc] initWithRootViewController:boxOfficeVC];
+    nvc1.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"BoxOffice" image:[UIImage imageNamed:@"BoxOffice"] tag:0];
 
+    //self.window.rootViewController = nvc;
     
-    UINavigationController* nvc = [[UINavigationController alloc] initWithRootViewController:collectionView];
-    self.window.rootViewController = nvc;
+    HomeTableViewController *dvdVC = [[HomeTableViewController alloc] initWithTitle:@"DVD" endpoint:@"http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/top_rentals.json?apikey=9sx7gw734qybnmm8mgq25423"];
+    UINavigationController* nvc2 = [[UINavigationController alloc] initWithRootViewController:dvdVC];
+    nvc2.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"DVD" image:[UIImage imageNamed:@"DVD"] tag:0];
+    
+    UITabBarController *tabBarController = [[UITabBarController alloc] init];
+    //tabBarController.tabBar. = [NSArray arrayWithObjects:item1, item2, nil];
+    NSArray* controllers = [NSArray arrayWithObjects:nvc1, nvc2, nil];
+    tabBarController.viewControllers = controllers;
+    self.window.rootViewController = tabBarController;
     
     return YES;
 }
